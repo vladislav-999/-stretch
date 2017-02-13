@@ -1,0 +1,7 @@
+
+User-agent: *
+# wa shop shop/*
+Disallow: /stuff-light/shop/my/
+Disallow: /stuff-light/shop/checkout/
+# wa shop
+
