@@ -1,0 +1,215 @@
+<!-- products thumbnail list view -->
+
+<div class="col-md-9 col-xs-12 float-right">
+    <div class="row">
+        <!-- Shop Top Bar -->
+        <div class="shop-top-bar text-center mb-50 col-xs-12">
+            <!-- Product View Mode -->
+            <ul class="view-mode float-left text-left">
+                <li data-view="grid-view" class="switch {if $smarty.cookies.view_page == '#grid-view' || empty($smarty.cookies.view_page) }active{/if}"><a href="#grid-view" data-toggle="tab"><i class="zmdi zmdi-apps"></i></a></li>
+                <li data-view="list-view" class="switch {if $smarty.cookies.view_page == '#list-view'}active{/if}" ><a href="#list-view" data-toggle="tab"><i class="zmdi zmdi-view-list"></i></a></li>
+            </ul>
+
+
+            <script>
+                $(document).ready(function(){
+
+                    $("#sorting").change(function(){
+                        location.assign($(this).val());
+                    });
+                });
+            </script>
+
+            <!-- Product Short By -->
+            <div class="pro-short-by text-left">
+                <!-- sorting -->
+                {$sort_fields = [
+                'name' => '[`Name`]',
+                'price' => '[`Price`]',
+                'total_sales' => '[`Bestsellers`]',
+                'rating' => '[`Customer rating`]',
+                'create_datetime'=>'[`Date added`]',
+                'stock' => '[`In stock`]'
+                ]}
+                {if !isset($active_sort)}
+                {$active_sort = $wa->get('sort', 'create_datetime')}
+                {/if}
+
+                <!-- sorting -->
+                <p>SHORT BY</p>
+                <select id="sorting">
+                    {if !empty($category) && !$category.sort_products}<option value="{$wa->currentUrl(0, 1)}"{if !$active_sort} selected="selected"{/if}>[`New & Popular`]</option>{/if}
+                    {foreach $sort_fields as $sort => $name}
+                    {$s_u = explode('"', $wa->shop->sortUrl($sort, $name, $active_sort)|replace:'&':'&amp;')}
+                    <option value="{$s_u[1]}">{$name}{if $active_sort == $sort}{if strpos($s_u[1], 'asc') !== false} &uarr;{elseif strpos($s_u[1], 'desc') !== false} &darr;{/if}{/if}</option>
+                    {if $active_sort == $sort}
+                    {if strpos($s_u[1], 'asc') !== false}
+                    <option value="{str_replace('asc', 'desc', $s_u[1])}" selected="selected" style="display: none;">{$name} &darr;</option>
+                    {elseif strpos($s_u[1], 'desc') !== false}
+                    <option value="{str_replace('desc', 'asc', $s_u[1])}" selected="selected" style="display: none;">{$name} &uarr;</option>
+                    {/if}
+                    {/if}
+                    {if $wa->get('sort') == $sort}{$wa->title( $wa->title()|cat:' — '|cat:$name)}{/if}
+                    {/foreach}
+                </select>
+            </div>
+            <!-- Product Showing Per Page -->
+            <div class="pro-showing float-right text-left">
+                <p>showing</p>
+                <select>
+                    <option value="1">16</option>
+                    <option value="2">20</option>
+                    <option value="3">24</option>
+                    <option value="4">28</option>
+                    <option value="5">32</option>
+                </select>
+            </div>
+        </div>
+        <div class="product-tab-content tab-content">
+
+                {if !empty($sorting)}
+                    <!-- sorting -->
+                    {$sort_fields = [
+                        'name' => '[`Name`]',
+                        'price' => '[`Price`]',
+                        'total_sales' => '[`Bestsellers`]',
+                        'rating' => '[`Customer rating`]',
+                        'create_datetime'=>'[`Date added`]',
+                        'stock' => '[`In stock`]']}
+                    {if !isset($active_sort)}
+                        {$active_sort = $wa->get('sort', 'create_datetime')}
+                    {/if}
+                    <ul class="sorting">
+                        <li>[`Sort by`]:</li>
+                        {if !empty($category) && !$category.sort_products}
+                            <li{if !$active_sort} class="selected"{/if}><a href="{$wa->currentUrl(0, 1)}">[`New & Popular`]</a></li>
+                        {/if}
+                        {foreach $sort_fields as $sort => $name}
+                            <li{if $active_sort == $sort} class="selected"{/if}>{$wa->shop->sortUrl($sort, $name, $active_sort)}</li>
+                            {if $wa->get('sort') == $sort}{$wa->title( $wa->title()|cat:' — '|cat:$name)}{/if}
+                        {/foreach}
+                    </ul>
+                {/if}
+
+                {if $wa->shop->cart->total() > 0}{$add2cart_label = '[`Add to cart`]'}{else}{$add2cart_label = '[`Buy`]'}{/if}
+
+                <ul class="thumbs product-list product-tab tab-pane {if $smarty.cookies.view_page && $smarty.cookies.view_page == '#grid-view' || $smarty.cookies.view_page == ''}active{/if}"  id="grid-view">
+                {if !empty($theme_settings.list_features)}
+                    {$features = $wa->shop->features($products)}
+                {/if}
+                {foreach $products as $p}
+                    {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+
+                        <li itemscope itemtype ="http://schema.org/Product" class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="sin-product">
+                                {$badge_html = $wa->shop->badgeHtml($p.badge)}
+                                {if $badge_html}
+                                <span class="pro-label">{$badge_html}</span>
+                                {/if}
+
+                                <div class="pro-image fix">
+                                    <a href="{$p.frontend_url}" class="image">
+                                        {$wa->shop->productImgHtml($p, '200x0', ['alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                                    </a>
+                                    <div class="pro-action">
+                                        <a href="#" class="action-btn cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                        <form class="purchase addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                                            <input type="hidden" name="product_id" value="{$p.id}">
+                                            <input type="submit" style="display: none;" value="{$add2cart_label}">
+                                            <i class="adding2cart"></i>
+                                            <span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $p.name, $wa->getUrl('shop/frontend/cart'))}</span>
+                                        </form>
+                                        <a href="#" class="action-btn wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                        <a href="{$p.frontend_url}" class="action-btn quick-view"><i class="zmdi zmdi-eye"></i></a>
+                                    </div>
+                                </div>
+                                <div class="pro-details text-center">
+                                    <div class="top fix">
+                                        <p class="pro-cat float-left">chair</p>
+                                        {if $p.rating > 0}
+                                            <span class="rating nowrap">{$wa->shop->ratingHtml($p.rating, 16)}</span>
+                                        {/if}
+                                        <p class="pro-ratting float-right">
+                                            <i class="zmdi zmdi-star"></i>
+                                            <i class="zmdi zmdi-star"></i>
+                                            <i class="zmdi zmdi-star"></i>
+                                            <i class="zmdi zmdi-star-half"></i>
+                                            <i class="zmdi zmdi-star-outline"></i>
+                                            <span>(24)</span>
+                                        </p>
+                                    </div>
+                                    <a href="{$p.frontend_url}" class="pro-title" itemprop="name">{$p.name}</a>
+                                    <h3 class="pro-price">
+                                        <span class="new">{shop_currency_html($p.price)}</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
+
+                {/foreach}
+                </ul>
+
+
+                <ul class="thumbs product-list product-tab tab-pane {if $smarty.cookies.view_page && $smarty.cookies.view_page == '#list-view'}active{/if}"  id="list-view">
+                    {if !empty($theme_settings.list_features)}
+                    {$features = $wa->shop->features($products)}
+                    {/if}
+                    {foreach $products as $p}
+                    {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+
+                    <li itemscope itemtype ="http://schema.org/Product" class="sin-list-product clearfix">
+
+                            <div class="pro-image col-lg-4 col-sm-5 col-xs-12">
+                                <a href="{$p.frontend_url}" class="image fix">
+                                    {$wa->shop->productImgHtml($p, '200x0', ['alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                                </a>
+                                <div class="pro-action">
+                                    <a href="#" class="action-btn cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                    <form class="purchase addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                                        <input type="hidden" name="product_id" value="{$p.id}">
+                                        <input type="submit" style="display: none;" value="{$add2cart_label}">
+                                        <i class="adding2cart"></i>
+                                        <span class="added2cart" style="display: none;">{sprintf('[`%s is now <a href="%s"><strong>in your shopping cart</strong></a>`]', $p.name, $wa->getUrl('shop/frontend/cart'))}</span>
+                                    </form>
+                                    <a href="#" class="action-btn wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                    <a href="#" class="action-btn quick-view"><i class="zmdi zmdi-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="list-pro-details col-lg-8 col-sm-7 col-xs-12">
+                                <div class="top fix">
+                                    <a href="{$p.frontend_url}" class="pro-title">{$p.name}r</a>
+                                    <p class="pro-ratting float-right">
+                                        {if $p.rating > 0}
+                                        <span class="rating nowrap">{$wa->shop->ratingHtml($p.rating, 16)}</span>
+                                        {/if}
+                                        <i class="zmdi zmdi-star"></i>
+                                        <i class="zmdi zmdi-star"></i>
+                                        <i class="zmdi zmdi-star"></i>
+                                        <i class="zmdi zmdi-star-half"></i>
+                                        <i class="zmdi zmdi-star-outline"></i>
+                                        <span>(24)</span>
+                                    </p>
+                                </div>
+                                <h3 class="pro-price">
+                                    <span class="new">{shop_currency_html($p.price)}</span>
+                                    {if $p.compare_price && $p.compare_price > 0}<span class="old">{shop_currency_html($p.compare_price)}</span>{/if}
+                                </h3>
+                                <div class="list-pro-dec">
+                                    <p>{$p.description|truncate:200}</p>
+                                </div>
+                            </div>
+
+                    </li>
+
+                    {/foreach}
+                </ul>
+
+                {if isset($pages_count) && $pages_count > 1}
+                <div class="block {if $theme_settings.pagination == 'lazyloading'}lazyloading-paging{else}paging-nav{/if}"  data-times="2" data-link-text="[`Load more`]" data-loading-str="[`Loading...`]">
+                    {wa_pagination total=$pages_count attrs=['class' => "menu-h"]}
+                </div>
+                {/if}
+
+        </div>
+    </div>
+</div>

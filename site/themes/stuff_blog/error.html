@@ -1,0 +1,33 @@
+{if $error_code == 404}
+
+	<!-- 404 Page
+	============================================ -->
+	<div class="page-area pb-90 pt-90">
+		<div class="container">
+			<div class="row">
+				<div class="page-404 text-center col-xs-12">
+					<div class="image-404 mb-80"><img src="{$wa_active_theme_url}img/404.png" alt="" /></div>
+					<h3>Oops! Sorry, we could not find the page</h3>
+					<a href="/stuff-light/">go back home</a>
+					<div class="search-form">
+						<form action="#">
+							<input type="text" placeholder="What are you looking for?" />
+							<button><i class="zmdi zmdi-search"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{elseif $error_code == 500}
+
+	<h1>{$error_code}.</h1>
+
+{elseif $error_code}
+
+	<h1>{$error_code}.{if $error_message}{$error_message}{else}[s`Error`]{/if}</h1>
+
+	[s`The requested resource is not available.`]
+
+{/if}

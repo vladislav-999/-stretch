@@ -1,0 +1,185 @@
+<div itemscope itemtype="http://schema.org/BlogPosting">
+
+    <article class="post" role="main" id="post-{$post.id}">
+
+        <div class="sin-blog-details col-xs-12">
+            <div class="blog-details-image"><img src="{$wa_active_theme_url}img/blog/blog-details.jpg" alt=""></div>
+            <div class="blog-details-content">
+                <div class="blog-content-wrapper">
+                    <div class="blog-details-head fix">
+                        <div class="blog-top-left float-left">
+                            <p class="date">20<span>may</span></p>
+                            {if $post.contact_id}
+                            <a href="{$post.user.posts_link}" class="username" itemprop="author"><i class="zmdi zmdi-account"></i>{$post.user.name}</a>
+                            {/if}
+                        </div>
+                        <div class="blog-top-right float-right">
+                            <div class="blog-social">
+                                <p>Share:</p>
+                                <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                                <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                                <a href="#"><i class="zmdi zmdi-linkedin"></i></a>
+                                <a href="#"><i class="zmdi zmdi-vimeo"></i></a>
+                                <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                            </div>
+                            <div class="blog-meta">
+                                <a href="#"><i class="zmdi zmdi-comments"></i> 02 Comments</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="blog-details-title">{$post.title}</h3>
+                        {$post.text}
+                    </div>
+                <div class="blog-details-author fix">
+                    <img src="{$wa_active_theme_url}img/comment/author.jpg" alt="" />
+                    <div class="content fix">
+                        <h4>About:  <span>Anika mollik</span></h4>
+                        <p>Lorem ipsum dolor sit amet, conse ctetur adipi sicing elit, sed do eiusmod tempor incidid unt ut labore et dolore the our magn aliqua. Ut enim ad minim veniam, quis nostrud exercitation </p>
+                    </div>
+                </div>
+                <div class="blog-comments fix">
+                    <h3>all comments</h3>
+                    <ul class="comment-list">
+                        <li>
+                            <div class="sin-comment">
+                                <div class="image float-left"><img src="{$wa_active_theme_url}img/comment/1.jpg" alt="" /></div>
+                                <div class="content fix">
+                                    <h4>Salim Rana</h4>
+                                    <span>2016 15 July</span>
+                                    <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                                    <p>Shabby chic selfies pickled Tumblr letterpress iPhone. Wolf vegan retro selvage literally Wes Anderson ethical four loko. Meggings blog chambray tofu pour-over. Pour-over Tumblr keffiyeh, cornhole whatever cardigan Tonx lomo.Shabby. at Tumblr keffiyeh, cornhole whatever cardigan Tonx lomo.Shabby.</p>
+                                </div>
+                            </div>
+                            <ul class="comment-list">
+                                <li>
+                                    <div class="sin-comment">
+                                        <div class="image float-left"><img src="{$wa_active_theme_url}img/comment/2.jpg" alt="" /></div>
+                                        <div class="content fix">
+                                            <h4>Momen Bhuiyan</h4>
+                                            <span>2016 15 July</span>
+                                            <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                                            <p>Shabby chic selfies pickled Tumblr letterpress iPhone. Wolf vegan retro selvage literally Wes Anderson ethical the four loko.Tumblr letterpress iPhone vegan retro selvage literally</p>
+                                        </div>
+                                    </div>
+                                    <ul class="comment-list">
+                                        <li>
+                                            <div class="sin-comment">
+                                                <div class="image float-left"><img src="{$wa_active_theme_url}img/comment/3.jpg" alt="" /></div>
+                                                <div class="content fix">
+                                                    <h4>M S Newaz</h4>
+                                                    <span>2016 15 July</span>
+                                                    <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                                                    <p>Shabby chic selfies pickled Tumblr letterpress iPhone. Wolf vegan retro selvage literally Wes And at son ethical the our four loko.</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="sin-comment">
+                                <div class="image float-left"><img src="{$wa_active_theme_url}img/comment/4.jpg" alt="" /></div>
+                                <div class="content fix">
+                                    <h4>N Sharif</h4>
+                                    <span>2016 15 July</span>
+                                    <a href="#"><i class="zmdi zmdi-mail-reply-all"></i></a>
+                                    <p>Shabby chic selfies pickled Tumblr letter press iPhone. Wolf vegan retro selvage lite rally Wes Anderson ethical four our aloko. Meggings blog chambray tofu pour-over. Pour-over Tumblr keffiyeh, cornhole whatever cardigan Tonx convut to lomo.Shabby.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="comments-form fix">
+                    <h3>leave a comment</h3>
+                    <form action="#">
+                        <div class="input-box-2 fix">
+                            <div class="input-box float-left">
+                                <input id="name" placeholder="Name*" type="text">
+                            </div>
+                            <div class="input-box float-left">
+                                <input placeholder="E-mail*" type="text">
+                            </div>
+                        </div>
+                        <div class="input-box review-box fix">
+                            <textarea placeholder="Message*"></textarea>
+                        </div>
+                        <div class="input-box submit-box text-center fix">
+                            <input value="submit comment" type="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <h1>
+            <span itemprop="name">{$post.title}</span>
+            {* @event prepare_posts_frontend.%plugin_id%.post_title *}
+            {if !empty($post.plugins.post_title)}
+                {foreach $post.plugins.post_title as $plugin => $output}{$output}{/foreach}
+            {/if}
+        </h1>
+
+        <div class="credentials">
+            {if $post.contact_id}
+                <a href="{$post.user.posts_link}">
+                    <img src="{$post.user.photo_url_20}" class="userpic" alt="">
+                </a>
+                <a href="{$post.user.posts_link}" class="username" itemprop="author">{$post.user.name}</a>
+            {else}
+                <img src="{$post.user.photo_url_20}" class="userpic" alt="">
+                <span class="username" itemprop="author">{$post.user.name}</span>
+            {/if}
+            <meta itemprop="datePublished" content="{$post.datetime|date_format:'Y-m-d\TH:i'}">
+
+            {*
+                <a href="ADD_YOUR_GOOGLE_PLUS_PROFILE_URL_HERE" rel="author"><i class="icon16 google"></i></a>
+            *}
+
+            <span class="hint date" title="{$post.datetime|wa_datetime}">{$post.datetime|wa_datetime:"humandate"}</span>
+        </div>
+
+        {* @event prepare_posts_frontend.%plugin_id%.before *}
+        {if !empty($post.plugins.before)}
+            <div class="text_before">
+                {foreach $post.plugins.before as $plugin => $output}{$output}{/foreach}
+            </div>
+        {/if}
+
+        <div class="text" itemprop="articleBody">
+            {$post.text}
+        </div>
+
+        {if $post.album_id && $post.album.id && $post.album.photos}
+            {include 'post.album.html' album=$post.album inline}
+        {/if}
+
+        {* @event prepare_posts_frontend.%plugin_id%.after *}
+        {if !empty($post.plugins.after)}
+            <div class="text_after">
+                {foreach $post.plugins.after as $plugin => $output}{$output}{/foreach}
+            </div>
+        {/if}
+
+        {*
+        <div class="share">
+            COULD BE A GOOD PLACE FOR SHARE BUTTONS
+        </div>
+        *}
+
+    </article>
+
+    {* @event frontend_post.%plugin_id%.footer *}
+    {foreach $frontend_post as $plugin => $output}
+        {if !empty($output.footer)}{$output.footer}{/if}
+    {/foreach}
+
+    {if $show_comments && $post.comments_allowed}
+        {if $post.status eq blogPostModel::STATUS_PUBLISHED}
+            {include 'comments.html' inline}
+        {else}
+            <h4>[`Comments for non published posts are disabled`]</h4>
+        {/if}
+    {/if}
+
+</div>

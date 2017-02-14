@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+{$html_class_array = []}
+{$_color_scheme_class = 'color_scheme_'|cat:str_replace('img/themesettings/','',str_replace('.png','',$theme_settings.color_scheme))}
+
+{if $theme_settings.color_scheme}{$html_class_array[] = $_color_scheme_class}{/if}
+{if $theme_settings.font_size}{$html_class_array[] = $theme_settings.font_size}{/if}
+{if $theme_settings.font_family}{$html_class_array[] = $theme_settings.font_family}{/if}
+{if $wa->globals('isMyAccount')}{$html_class_array[] = 'my'}{/if}
+
+<html{if !empty($html_class_array)} class="{join(' ', $html_class_array)}"{/if}>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1{if $wa->isMobile()}, maximum-scale=1, user-scalable=0{/if}" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+
+    <title>{$wa->title()|escape}</title>
+    <meta name="Keywords" content="{$wa->meta('keywords')|escape}" />
+    <meta name="Description" content="{$wa->meta('description')|escape}" />
+
+    {if !empty($canonical)}<link rel="canonical" href="{$canonical}"/>{/if}
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    {if $wa->blog}
+        <!-- rss -->
+        {$rss=$wa->blog->rssUrl()}
+        {if $rss}<link rel="alternate" type="application/rss+xml" title="{$wa->accountName()}" href="{$rss}">{/if}
+    {/if}
+
+
+    <!-- js -->
+    <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-1.11.1.min.js" ></script>
+    <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{$wa_theme_url}default.js?v{$wa_theme_version}"></script>
+
+    {$wa->js()} {* links active plugins JS *}
+
+    {include file="`$wa_active_theme_path`/head.html" inline}
+
+    {$wa->head()} {* links Google Analytics tracking code, site's custom JS (defined in Site app settings), and meta data such as Open Graph data *}
+
+
+    <!-- Style CSS
+============================================ -->
+    <link rel="stylesheet" href="{$wa_theme_url}css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <script>
+    document.createElement('header');
+    document.createElement('nav');
+    document.createElement('section');
+    document.createElement('article');
+    document.createElement('aside');
+    document.createElement('footer');
+    document.createElement('figure');
+    document.createElement('hgroup');
+    document.createElement('menu');
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+<!-- Pre Loader
+============================================ -->
+<div class="preloader">
+    <div class="loading-center">
+        <div class="loading-center-absolute">
+            <div class="object object_one"></div>
+            <div class="object object_two"></div>
+            <div class="object object_three"></div>
+        </div>
+    </div>
+</div>
+<!-- Body main wrapper start -->
+<div class="wrapper bg-white fix">
+
+
+
+    <!-- APP CONTENT -->
+    <main class="maincontent">
+
+            {include file="`$wa_active_theme_path`/main.html" inline}
+
+    </main>
+
+
+    <!-- Brand Area
+    ============================================ -->
+    <div class="brand-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="brand-slider">
+                        {if $wa->photos}
+                            {$photos = $wa->photos->photos("/album/1", "970")}
+                            {foreach $photos as $photo}
+                                <div class="sin-brand"><img src="{$photo.thumb_970.url}" alt="{$photo.name}.{$photo.ext}" /></div>
+                            {/foreach}
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Top Area
+    ============================================ -->
+    <div class="footer-top-area pb-70 pt-150">
+        <div class="container">
+            <div class="row">
+                <div class="footer-contact col-md-4 col-sm-6 col-xs-12">
+                    {if $theme_settings.logo}
+                        <img src="{$wa_theme_url}{$theme_settings.logo}?v{$wa_theme_version}" alt="" id="logo" />
+                    {/if}
+                    <div><span>Address :</span> <p>28 Green Tower, Street Name, <br />New York City, USA</p></div>
+                    <div><span>Cell-Phone :</span> <p>+8880 44338899</p></div>
+                    <div><span>Email :</span> <a href="#">yourmail@outlook.com</a></div>
+                    <div class="footer-social fix">
+                        <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                        <a href="#"><i class="zmdi zmdi-instagram"></i></a>
+                        <a href="#"><i class="zmdi zmdi-rss"></i></a>
+                        <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                        <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-account col-md-2 col-sm-6 col-xs-12">
+                    <h4>accounts</h4>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">My Wishlist</a></li>
+                        <li><a href="#">My Cart</a></li>
+                        <li><a href="#">Sign In</a></li>
+                        <li><a href="#">Check out</a></li>
+                    </ul>
+                </div>
+                <div class="footer-shipping col-md-2 col-sm-6 col-xs-12">
+                    <h4>shipping</h4>
+                    <ul>
+                        <li><a href="#">New Products</a></li>
+                        <li><a href="#">Top Sellers</a></li>
+                        <li><a href="#">Manufactirers</a></li>
+                        <li><a href="#">Suppliers</a></li>
+                        <li><a href="#">Specials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter col-md-4 col-sm-6 col-xs-12">
+                    <h4>Email Newsletters</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adip isicing elit, sed do eiusmod tempor incididunt.</p>
+                    <form id="mc-form" class="mc-form" >
+                        <input id="mc-email" type="email" autocomplete="off" placeholder="Enter Address..." />
+                        <input id="mc-submit" type="submit" value="subscribe" />
+                    </form>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts text-centre">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Bottom Area
+    ============================================ -->
+    <div class="footer-bottom-area pb-20 pt-20">
+        <div class="container">
+            <div class="row">
+                <div class="copyright text-left col-sm-6 col-xs-12">
+                    <p>Copyright &copy; 2016 <a href="http://hastech.company/" target="_blank">Hastech</a>. All Right Reserved.</p>
+                </div>
+                <div class="payment-method text-right col-sm-6 col-xs-12">
+                    <img src="{$wa_active_theme_url}img/payment/1.png" alt="payment" />
+                    <img src="{$wa_active_theme_url}img/payment/2.png" alt="payment" />
+                    <img src="{$wa_active_theme_url}img/payment/3.png" alt="payment" />
+                    <img src="{$wa_active_theme_url}img/payment/4.png" alt="payment" />
+                    <img src="{$wa_active_theme_url}img/payment/5.png" alt="payment" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>
+    <!-- Body main wrapper end -->
+
+
+</div>
+<!-- JS -->
+
+<!-- jQuery JS
+============================================ -->
+<!-- Bootstrap JS
+============================================ -->
+<script src="{$wa_active_theme_url}js/bootstrap.min.js"></script>
+<!-- Plugins JS
+============================================ -->
+<script src="{$wa_active_theme_url}js/plugins.js"></script>
+<!-- Main JS
+============================================ -->
+<script src="{$wa_active_theme_url}js/main.js"></script>
+
+</body>
+</html>

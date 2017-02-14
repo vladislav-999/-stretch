@@ -1,0 +1,42 @@
+<!-- CSS -->
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="{$wa_active_theme_url}css/bootstrap.min.css">
+<!-- Icon Font CSS
+============================================ -->
+<link rel="stylesheet" href="{$wa_active_theme_url}css/material-design-iconic-font.min.css">
+<!-- Plugins Import CSS
+============================================ -->
+<link rel="stylesheet" href="{$wa_active_theme_url}css/import.css">
+
+<!-- Responsive CSS
+============================================ -->
+<link rel="stylesheet" href="{$wa_active_theme_url}css/responsive.css">
+
+<link href="{$wa_active_theme_url}css/color/color-1.css" rel="stylesheet">
+
+<!-- Modernizer JS
+============================================ -->
+<script src="{$wa_active_theme_url}js/vendor/modernizr-2.8.3.min.js"></script>
+
+
+<script src="{$wa_active_theme_url}js/scripts.js"></script>
+
+
+<!-- blog css -->
+<link href="{$wa_active_theme_url}default.blog.css?v{$wa_theme_version}" rel="stylesheet" type="text/css">
+
+<!-- blog js -->
+<script type="text/javascript" src="{$wa_active_theme_url}default.blog.js?v{$wa_theme_version}"></script>
+
+<!-- next & prev links -->
+{foreach $links as $role => $link}
+<link rel="{$role}" href="{$link}">
+{/foreach}
+
+{* @event (frontend_action_default|frontend_action_post|frontend_action_page|frontend_action_error).%plugin_id%.head *}
+{foreach $frontend_action as $plugin => $output}
+    {if !empty($output.head)}{$output.head}{/if}
+{/foreach}
+
+

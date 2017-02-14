@@ -1,0 +1,253 @@
+{include file="`$wa_active_theme_path`/header-home.html" inline}
+
+{$promocards = $wa->shop->promos()}
+{$bestsellers = $wa->shop->productSet( $theme_settings.homepage_productset_bestsellers )}
+
+{if $theme_settings.homepage_bxslider_mode == 'products'}
+{$promoproducts = $wa->shop->productSet( $theme_settings.homepage_productset_promo )}
+{/if}
+
+{if $promocards}
+<div class="slider-area-1 top-header-space-1  pb-90">
+    <div id="mainSlider-1" class="nivoSlider slider-image">
+        {foreach $promocards as $promo}
+            <a href="{$promo.link|escape}">
+                <img src="{$promo.image}" alt="main slider" />
+            </a>
+        {/foreach}
+    </div>
+</div>
+{/if}
+
+
+<!-- Shipping Area
+============================================ -->
+<div class="shipping-area  pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="shipping-wrapper-1">
+                    <!-- Single Shipping -->
+                    {if !empty($theme_settings.homepage_bullet_title_1)}
+                        <div class="sin-shipping-1 col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2 col-xs-12">
+                            <div class="icon float-left">
+                                <i class="zmdi zmdi-car"></i>
+                            </div>
+                            <div class="content fix">
+                                <h4>{$theme_settings.homepage_bullet_title_1}</h4>
+                                <p>{$theme_settings.homepage_bullet_body_1}</p>
+                            </div>
+                        </div>
+                    {/if}
+                    <!-- Single Shipping -->
+                    {if !empty($theme_settings.homepage_bullet_title_2)}
+                        <div class="sin-shipping-1 col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2 col-xs-12">
+                            <div class="icon float-left">
+                                <i class="zmdi zmdi-balance-wallet"></i>
+                            </div>
+                            <div class="content fix">
+                                <h4>{$theme_settings.homepage_bullet_title_2}</h4>
+                                <p>{$theme_settings.homepage_bullet_body_2}</p>
+                            </div>
+                        </div>
+                    {/if}
+                    <!-- Single Shipping -->
+                    {if !empty($theme_settings.homepage_bullet_title_3)}
+                        <div class="sin-shipping-1 col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2 col-xs-12">
+                            <div class="icon float-left">
+                                <i class="zmdi zmdi-headset"></i>
+                            </div>
+                            <div class="content fix">
+                                <h4>{$theme_settings.homepage_bullet_title_3}</h4>
+                                <p>{$theme_settings.homepage_bullet_body_3}</p>
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Products Area
+============================================ -->
+<div class="products-area  pb-40">
+    <div class="container">
+        <div class="row">
+
+            {if $wa->shop->productSet("popular")}
+                {$products = $wa->shop->productSet("popular")}
+            {/if}
+            {if $wa->shop->productSet("popular")}
+                {$products = $wa->shop->productSet("popular")}
+            {/if}
+            {if $wa->shop->productSet("popular")}
+                {$products = $wa->shop->productSet("popular")}
+            {/if}
+
+
+            <ul class="product-tab-list col-xs-12 text-center mb-50">
+                {if $wa->shop->productSet("new_arrivals")}
+                    <li><a href="#new-arrivals" data-toggle="tab">New Arrivals</a></li>
+                {/if}
+                {if $wa->shop->productSet("popular")}
+                    {$products = $wa->shop->productSet("popular")}
+                    <li class="active"><a href="#popular-product" data-toggle="tab">Popular Product</a></li>
+                {/if}
+                {if $wa->shop->productSet("best_seller")}
+                    {$products = $wa->shop->productSet("best_seller")}
+                    <li><a href="#best-seller" data-toggle="tab">Best Seller</a></li>
+                {/if}
+            </ul>
+        </div>
+        <div class="row">
+            <div class="product-tab-content tab-content">
+
+                {if $wa->shop->productSet("new_arrivals")}
+                    {$products = $wa->shop->productSet("new_arrivals")}
+                    <div class="product-tab tab-pane" id="new-arrivals">
+
+                        {foreach $products as $p}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="sin-product">
+                                    <div class="pro-image fix">
+                                        <a href="{$p.frontend_url}" class="image">
+                                            {$wa->shop->productImgHtml($p, '200x0', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                                        </a>
+                                        <div class="pro-action">
+                                            <a href="#" class="action-btn cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                            <a href="#" class="action-btn wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                            <a href="{$p.frontend_url}" class="action-btn quick-view"><i class="zmdi zmdi-eye"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="pro-details text-center">
+                                        <div class="top fix">
+
+                                        </div>
+                                        <a href="{$p.frontend_url}" class="pro-title">{$p.name}</a>
+                                        <h3 class="pro-price">
+                                            <span class="new">{shop_currency_html($p.price)}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        {/foreach}
+
+                    </div>
+                {/if}
+
+                {if $wa->shop->productSet("popular")}
+                {$products = $wa->shop->productSet("popular")}
+                <div class="product-tab tab-pane active" id="popular-product">
+
+                    {foreach $products as $p}
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="sin-product">
+                            <div class="pro-image fix">
+                                <a href="{$p.frontend_url}" class="image">
+                                    {$wa->shop->productImgHtml($p, '200x0', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                                </a>
+                                <div class="pro-action">
+                                    <a href="#" class="action-btn cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                    <a href="#" class="action-btn wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                    <a href="{$p.frontend_url}" class="action-btn quick-view"><i class="zmdi zmdi-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="pro-details text-center">
+                                <div class="top fix">
+
+                                </div>
+                                <a href="{$p.frontend_url}" class="pro-title">{$p.name}</a>
+                                <h3 class="pro-price">
+                                    <span class="new">{shop_currency_html($p.price)}</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+
+                </div>
+                {/if}
+                {if $wa->shop->productSet("best_seller")}
+                {$products = $wa->shop->productSet("best_seller")}
+                <div class="product-tab tab-pane" id="best-seller">
+
+                    {foreach $products as $p}
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="sin-product">
+                            <div class="pro-image fix">
+                                <a href="{$p.frontend_url}" class="image">
+                                    {$wa->shop->productImgHtml($p, '200x0', ['itemprop' => 'image', 'alt' => $p.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                                </a>
+                                <div class="pro-action">
+                                    <a href="#" class="action-btn cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                    <a href="#" class="action-btn wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                    <a href="{$p.frontend_url}" class="action-btn quick-view"><i class="zmdi zmdi-eye"></i></a>
+                                </div>
+                            </div>
+                            <div class="pro-details text-center">
+                                <div class="top fix">
+
+                                </div>
+                                <a href="{$p.frontend_url}" class="pro-title">{$p.name}</a>
+                                <h3 class="pro-price">
+                                    <span class="new">{shop_currency_html($p.price)}</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+
+                </div>
+                {/if}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blog Area
+============================================ -->
+
+{if $theme_settings.homepage_blogposts && $wa->blog}
+<div class="blog-area pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="section-title black text-center mb-50 col-xs-12">
+                <h2>recent blog post</h2>
+            </div>
+        </div>
+        <div class="row">
+
+            {$blog_posts = $wa->blog->posts(null,2)}
+            {if count($blog_posts)}
+                {$n = 1}
+                {foreach $blog_posts as $post}
+                    <div class="sin-blog">
+                        <div class="blog-image col-md-6 col-xs-12 {if $n is even} float-right{/if} "><a href="{$post.url}"><img src="{$wa_active_theme_url}img/blog/1.jpg" alt="" /></a></div>
+                        <div class="blog-content {if $n is even} content-right{else} content-left{/if} col-md-6 col-xs-12">
+                            <div class="blog-content-wrapper">
+                                <span class="blog-date"><i class="zmdi zmdi-time"></i> Date : {$post.datetime|wa_datetime:"humandate"}</span>
+                                <h4 class="blog-title"><a href="{$post.url}">{$post.title}</a></h4>
+                                <p>{strip_tags($post.text)|truncate:300}</p>
+                                <div class="blog-foot fix">
+                                    <a href="{$post.url}" class="read-more">read more<i class="zmdi zmdi-long-arrow-right"></i></a>
+                                    <div class="blog-meta float-right">
+                                        <a href="#"><i class="zmdi zmdi-account"></i> {$post['user'].name}</a>
+                                        <a href="#"><i class="zmdi zmdi-comments"></i> {$post.comment_count} Comments</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {$n = $n + 1}
+                {/foreach}
+            {/if}
+
+
+        </div>
+    </div>
+</div>
+{/if}
+
